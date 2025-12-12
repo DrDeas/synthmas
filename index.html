@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Very Synthmas Christmas | Eldrin L. Deas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Crimson+Pro:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-green: #1a2419;
+            --forest-green: #2d3a2e;
+            --gold: #c9a227;
+            --gold-light: #e8c547;
+            --cream: #f5e6c8;
+            --warm-white: #fff8e7;
+            --ember: #ff6b35;
+            --ember-glow: #ff9a5c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Crimson Pro', Georgia, serif;
+            background: var(--deep-green);
+            color: var(--cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Snowfall Animation */
+        .snowfall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Warm glow overlay */
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 100%, rgba(255, 107, 53, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(201, 162, 39, 0.5);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cream);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold-light);
+            text-shadow: 0 0 15px rgba(201, 162, 39, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 10;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .album-container {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .album-cover {
+            width: min(450px, 85vw);
+            height: auto;
+            border: 4px solid var(--gold);
+            box-shadow: 
+                0 0 60px rgba(201, 162, 39, 0.3),
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                inset 0 0 60px rgba(255, 107, 53, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .album-cover:hover {
+            transform: scale(1.02);
+            box-shadow: 
+                0 0 80px rgba(201, 162, 39, 0.5),
+                0 30px 100px rgba(0, 0, 0, 0.6),
+                inset 0 0 60px rgba(255, 107, 53, 0.15);
+        }
+
+        /* Twinkling lights around album */
+        .lights {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            pointer-events: none;
+        }
+
+        .light {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .title-section {
+            margin-bottom: 2rem;
+        }
+
+        .album-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--gold);
+            text-shadow: 
+                0 0 30px rgba(201, 162, 39, 0.6),
+                0 0 60px rgba(201, 162, 39, 0.3);
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            line-height: 1.8;
+        }
+
+        .artist-name {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .tagline {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--ember-glow);
+            margin-top: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .release-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--gold);
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        /* CTA Sections */
+        .cta-section {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
+        }
+
+        .platforms-grid {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Buy Section */
+        .buy-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #a88520 100%);
+            color: var(--deep-green);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 20px rgba(201, 162, 39, 0.4),
+                0 0 40px rgba(201, 162, 39, 0.2);
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 30px rgba(201, 162, 39, 0.6),
+                0 0 60px rgba(201, 162, 39, 0.3);
+        }
+
+        .buy-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Stream Section */
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stream-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: rgba(45, 58, 46, 0.8);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            color: var(--cream);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .stream-btn:hover {
+            background: rgba(201, 162, 39, 0.2);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(201, 162, 39, 0.2);
+        }
+
+        .stream-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            opacity: 0.9;
+        }
+
+        /* Tracklist Section */
+        .tracklist-section {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .tracklist {
+            max-width: 600px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .tracklist li {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tracklist li:hover {
+            padding-left: 1rem;
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        .track-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gold);
+            width: 40px;
+            opacity: 0.7;
+        }
+
+        .track-title {
+            flex: 1;
+            color: var(--cream);
+        }
+
+        /* About Section */
+        .about-section {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--cream);
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--cream);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .social-links svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .copyright {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cream);
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
+        /* Decorative Elements */
+        .ornament {
+            display: inline-block;
+            color: var(--gold);
+            opacity: 0.6;
+            margin: 0 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.65rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .buy-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .buy-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .stream-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <!-- Snowfall Effect -->
+    <div class="snowfall" id="snowfall"></div>
+    
+    <!-- Warm Glow Overlay -->
+    <div class="glow-overlay"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">ELDRIN L. DEAS</div>
+        <nav>
+            <a href="#listen">Listen</a>
+            <a href="#tracks">Tracks</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="album-container fade-in">
+            <div class="lights" id="lights"></div>
+            <img src="A_Very_Synthmas_Christmas_Album_CoverBIG.png" alt="A Very Synthmas Christmas - Album Cover" class="album-cover">
+        </div>
+        
+        <div class="title-section fade-in delay-1">
+            <h1 class="album-title">A VERY SYNTHMAS<br>CHRISTMAS</h1>
+            <p class="artist-name">Eldrin L. Deas</p>
+            <p class="tagline">17 synth-driven instrumental Christmas classics</p>
+            <div class="release-date">OUT DECEMBER 18, 2025</div>
+        </div>
+    </section>
+
+    <!-- Listen Section -->
+    <section class="cta-section" id="listen">
+        <h2 class="section-title">✦ BUY THE ALBUM ✦</h2>
+        <div class="platforms-grid">
+            <div class="buy-buttons fade-in delay-2">
+                <a href="#" class="buy-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    iTunes
+                </a>
+                <a href="#" class="buy-btn">
+                    <svg viewBox="0 0 24 24">
+                        <text x="12" y="15" text-anchor="middle" font-family="'ITC Officina Sans', 'Officina Sans', 'Open Sans', sans-serif" font-size="16" font-weight="700" fill="currentColor">a</text>
+                        <path d="M3.5 18.5c2.5 1.5 5.5 2.3 8.5 2.3s6-.8 8.5-2.3c.2-.1.1-.4-.1-.3-2.5 1.3-5.4 2-8.4 2s-5.9-.7-8.4-2c-.2-.1-.3.2-.1.3zm17.5-.8c-.2-.3-1.4-.2-2-.1-.1 0-.2-.1-.1-.2 1-.7 2.6-.5 2.8-.2.2.3-.1 1.8-1 2.5-.1.1-.2.1-.2-.1.2-.6.6-1.6.5-1.9z"/>
+                    </svg>
+                    Amazon
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 3rem;">✦ STREAM NOW ✦</h2>
+        <div class="platforms-grid">
+            <div class="stream-grid fade-in delay-3">
+                <a href="#" class="stream-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                    Spotify
+                </a>
+                <a href="#" class="stream-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Apple Music
+                </a>
+                <a href="#" class="stream-btn">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    YouTube Music
+                </a>
+                <a href="#" class="stream-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 3L8 7l-4-4-4 4 4 4 4-4 4 4 4-4 4 4 4-4-4-4-4 4-4-4zm0 8l-4 4 4 4 4-4-4-4z"/></svg>
+                    Tidal
+                </a>
+
+
+            </div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 2rem; font-family: 'Crimson Pro', serif; font-style: italic; opacity: 0.7;">
+            ...and everywhere else you stream music!
+        </p>
+    </section>
+
+    <!-- Tracklist Section -->
+    <section class="tracklist-section" id="tracks">
+        <h2 class="section-title">✦ TRACKLIST ✦</h2>
+        <ol class="tracklist fade-in delay-2">
+            <li><span class="track-number">01</span><span class="track-title">Have Yourself A Merry Little Christmas</span></li>
+            <li><span class="track-number">02</span><span class="track-title">The Christmas Song</span></li>
+            <li><span class="track-number">03</span><span class="track-title">Silent Night</span></li>
+            <li><span class="track-number">04</span><span class="track-title">Santa Claus Is Coming To Town</span></li>
+            <li><span class="track-number">05</span><span class="track-title">O Christmas Tree</span></li>
+            <li><span class="track-number">06</span><span class="track-title">Greensleeves</span></li>
+            <li><span class="track-number">07</span><span class="track-title">My Favorite Things</span></li>
+            <li><span class="track-number">08</span><span class="track-title">Little Drummer Boy</span></li>
+            <li><span class="track-number">09</span><span class="track-title">I'll Be Home For Christmas</span></li>
+            <li><span class="track-number">10</span><span class="track-title">Deck The Halls</span></li>
+            <li><span class="track-number">11</span><span class="track-title">The First Noel</span></li>
+            <li><span class="track-number">12</span><span class="track-title">Hark! The Herald Angels Sing</span></li>
+            <li><span class="track-number">13</span><span class="track-title">Joy To The World</span></li>
+            <li><span class="track-number">14</span><span class="track-title">O Come, All Ye Faithful</span></li>
+            <li><span class="track-number">15</span><span class="track-title">God Rest Ye Merry Gentlemen</span></li>
+            <li><span class="track-number">16</span><span class="track-title">Angels We Have Heard On High</span></li>
+            <li><span class="track-number">17</span><span class="track-title">We Three Kings</span></li>
+        </ol>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <h2 class="section-title">✦ ABOUT THE ALBUM ✦</h2>
+        <div class="about-content fade-in">
+            <p>
+                <span class="ornament">❄</span>
+                A Very Synthmas Christmas reimagines beloved holiday classics through the warm glow of analog synthesizers. 
+                17 instrumental tracks blend vintage synth textures with timeless melodies, creating the perfect soundtrack 
+                for cozy winter evenings by the fire.
+                <span class="ornament">❄</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter/X">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+        <p class="copyright">© 2025 ELDRIN L. DEAS. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        // Create snowfall effect
+        function createSnowflakes() {
+            const snowfall = document.getElementById('snowfall');
+            const flakes = ['❄', '❅', '❆', '✦', '•'];
+            
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.fontSize = (Math.random() * 0.8 + 0.4) + 'rem';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.2;
+                snowfall.appendChild(snowflake);
+            }
+        }
+
+        // Create twinkling lights around album
+        function createLights() {
+            const lightsContainer = document.getElementById('lights');
+            const colors = ['#ff6b35', '#c9a227', '#e8c547', '#ff9a5c', '#fff8e7'];
+            
+            for (let i = 0; i < 20; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                
+                // Position lights around the border
+                const side = Math.floor(Math.random() * 4);
+                switch(side) {
+                    case 0: // top
+                        light.style.top = '-10px';
+                        light.style.left = Math.random() * 100 + '%';
+                        break;
+                    case 1: // right
+                        light.style.right = '-10px';
+                        light.style.top = Math.random() * 100 + '%';
+                        break;
+                    case 2: // bottom
+                        light.style.bottom = '-10px';
+                        light.style.left = Math.random() * 100 + '%';
+                        break;
+                    case 3: // left
+                        light.style.left = '-10px';
+                        light.style.top = Math.random() * 100 + '%';
+                        break;
+                }
+                
+                light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                light.style.boxShadow = `0 0 10px ${light.style.backgroundColor}`;
+                light.style.animationDelay = Math.random() * 2 + 's';
+                
+                lightsContainer.appendChild(light);
+            }
+        }
+
+        // Initialize
+        createSnowflakes();
+        createLights();
+    </script>
+</body>
+</html>
