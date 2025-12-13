@@ -37,6 +37,69 @@
             overflow-x: hidden;
         }
 
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .lightbox-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 100px rgba(201, 162, 39, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--cream);
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .lightbox-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cream);
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+
         /* Snowfall Animation */
         .snowfall {
             position: fixed;
@@ -153,6 +216,7 @@
                 0 25px 80px rgba(0, 0, 0, 0.5),
                 inset 0 0 60px rgba(255, 107, 53, 0.1);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
         }
 
         .album-cover:hover {
@@ -503,6 +567,15 @@
     </style>
 </head>
 <body>
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">✕</button>
+            <img src="https://drdeas.github.io/Synthmas/images/A_Very_Synthmas_Christmas_Album_Cover.jpeg" alt="A Very Synthmas Christmas - Album Cover (Full Size)" class="lightbox-image">
+            <span class="lightbox-hint">CLICK ANYWHERE TO CLOSE</span>
+        </div>
+    </div>
+
     <!-- Snowfall Effect -->
     <div class="snowfall" id="snowfall"></div>
     
@@ -523,7 +596,7 @@
     <section class="hero">
         <div class="album-container fade-in">
             <div class="lights" id="lights"></div>
-            <img src="https://drdeas.github.io/Synthmas/images/A_Very_Synthmas_Christmas_Album_Cover.jpeg" alt="A Very Synthmas Christmas - Album Cover" class="album-cover">
+            <img src="https://drdeas.github.io/Synthmas/images/A_Very_Synthmas_Christmas_Album_Cover.jpeg" alt="A Very Synthmas Christmas - Album Cover" class="album-cover" id="album-cover">
         </div>
         
         <div class="title-section fade-in delay-1">
@@ -572,8 +645,6 @@
                     <svg viewBox="0 0 24 24"><path d="M12 3L8 7l-4-4-4 4 4 4 4-4 4 4 4-4 4 4 4-4-4-4-4 4-4-4zm0 8l-4 4 4 4 4-4-4-4z"/></svg>
                     Tidal
                 </a>
-
-
             </div>
         </div>
         
@@ -637,6 +708,36 @@
     </footer>
 
     <script>
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const albumCover = document.getElementById('album-cover');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        albumCover.addEventListener('click', () => {
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
         // Create snowfall effect
         function createSnowflakes() {
             const snowfall = document.getElementById('snowfall');
